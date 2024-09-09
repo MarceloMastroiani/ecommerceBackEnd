@@ -1,0 +1,262 @@
+paths:
+  #MUESTRA EL CARRITO POR ID
+  /api/carts/{cid}:
+    get:
+      summary: Muestra el carrito por id
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito encontrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+    #ELIMINA TODOS LOS PRODUCTOS DEL CARRITO
+    delete:
+      summary: Elimina todos los productos del carrito
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito eliminado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+    #ACTUALIZAR CARRITO
+    put:
+      summary: Actualiza el carrito
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  required: true
+      responses:
+        "200":
+          description: Carrito actualizado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+  #CREA UN NUEVO CARRITO
+  /api/carts/create:
+    post:
+      summary: Crea un nuevo carrito
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+      responses:
+        "200":
+          description: Carrito creado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+  #AGREGA UN PRODUCTO AL CARRITO
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agrega un producto al carrito
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: pid
+          description: Identificador del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto agregado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+  #ELIMINA EL PRODUCTO DEL CARRITO
+  /api/carts/{cid}/products/{pid}:
+    delete:
+      summary: Elimina un producto del carrito
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: pid
+          description: Identificador del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+    #ACTUALIZA QUANTITY
+    put:
+      summary: Actualiza la cantidad del producto en el carrito
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: pid
+          description: Identificador del producto
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: number
+                  required: true
+      responses:
+        "200":
+          description: Quantity actualizado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+
+  #COMPRAR
+  /api/carts/{cid}/{email}/purchase:
+    get:
+      summary: Compra un producto en el carrito
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          description: Identificador del carrito
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: email
+          description: Correo electrónico del cliente
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Compra realizada
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno en la aplicación
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Identificador del carrito
+        products:
+          type: array
+          description: Productos del carrito
+        total:
+          type: number
+          description: Total del carrito
+        owner:
+          type: string
+          description: Dueño del carrito
+      example:
+        _id: 5f9d2bd5d4ae0a001ee1a0d1
+        products:
+          - product: 5f9d2bd5d4ae0a001ee1a0d1
+            quantity: 1

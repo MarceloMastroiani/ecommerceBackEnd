@@ -1,0 +1,31 @@
+<div class="fromCont">  
+        <h2>Agregar productos</h2>
+    <form class="form" id="formProducts" action="/api/products/add" method="post">
+
+        <label for="title">Nombre del producto</label> {{!-- 1 --}}
+        <input type="text" id="title" name="title">
+
+        <label for="description">Descripcion del producto</label>  {{!-- 2 --}}
+        <input type="text" id="description" name="description">
+
+        <label for="code">Codigo del producto</label> {{!-- 3 --}}
+        <input type="text" id="code" name="code">
+
+        <label for="price">Precio del producto</label> {{!-- 4 --}}
+        <input type="number" id="price" name="price">
+
+        <label for="stock">Cantidad en stock</label> {{!-- 5 --}}
+        <input type="number" id="stock" name="stock">
+
+        <label for="category">Categoria del producto</label> {{!-- 6 --}}
+        <input type="text" id="category" name="category">
+
+         <label for="brand">Marca del producto</label> {{!-- 6 --}}
+        <input type="text" id="brand" name="brand">
+
+        <label for="thumbnails">Imagen del producto</label> {{!-- 7 --}}
+        <input type="file" id="thumbnails" name="thumbnails">
+        
+        <button type="submit"> Enviar producto</button>
+    </form>
+</div>

@@ -1,0 +1,81 @@
+<h1>Usuarios para administrar</h1>
+
+
+<div style="width: 500px; margin: 0 auto; text-align: center;">
+<button onclick="deleteUserDays()" style="width: 200px; background-color: rgba(255, 0, 0, 0.819); color: white">Eliminar todos los usuarios inactivos</button>
+</div>
+
+<br>
+<hr>
+<br>
+
+{{#each users}}
+    <div class="productsList">
+    <ul>
+        <li>Nombre: {{this.firstName}}</li>
+        <li>Email: {{this.email}}</li>
+        <li>Role: {{this.role}}</li>
+    </ul>
+
+    <select name="" id="select-{{this._id}}">
+        {{#if this.isUser}} <option value="user" selected>user</option>{{else}} <option value="user">user</option> {{/if}}
+        {{#if this.isPremium}} <option value="premium" selected>premium</option>{{else}} <option value="premium">premium</option> {{/if}}
+        {{#if this.isAdmin}} <option value="admin" selected>admin</option>{{else}} <option value="admin">admin</option> {{/if}}
+    </select>
+
+    <div style="display: flex; margin-left: 20px; gap: 15px;">
+        <button onclick="updateUser('{{this._id}}')">Cambiar rol</button>
+        <button onclick="deleteUser('{{this._id}}')">Eliminar usuario</button>
+    </div>
+
+    <br>
+    <hr>
+{{/each}}
+
+<script>
+
+    function updateUser(id){
+        const newRole = document.getElementById(`select-${id}`).value; 
+        
+        fetch(`http://localhost:8080/api/users/edit/${id}`, {
+            method:'PUT',
+            body: JSON.stringify({role:newRole}),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then((res )=> {
+            if(res.status == 200){
+                window.location.reload();
+            }
+        })
+    }
+    function deleteUser(id){
+        const newRole = document.getElementById(`select-${id}`).value; 
+        
+        fetch(`http://localhost:8080/api/users/delete/${id}`, {
+            method:'DELETE',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then((res)=>{
+            if(res.status == 200){
+                window.location.reload();
+            }
+        })
+    }
+
+      function deleteUserDays(){
+        console.log("entro");
+        fetch(`http://localhost:8080/api/users/deletes`, {
+            method:'DELETE',
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then((res)=>{
+            if(res.status == 200){
+                window.location.reload();
+            }
+        })
+    }
+
+</script>

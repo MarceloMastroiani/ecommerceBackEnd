@@ -1,0 +1,28 @@
+
+
+<div class="productsList">
+    <h1>Lista de productos en tiempo real</h1>
+    {{#each product}}
+        <ul>
+            <li><span>Nombre:</span> {{this.title}}</li>
+            <li> <span>Descripcion:</span> {{this.description}} </li>
+            <li> <span>Codigo:</span> {{this.code}}</li>
+            <li><span>Precio:</span> ${{this.price}} </li>
+            <li><span>Stock:</span> {{this.stock}}</li>
+            <li><span>Categoria:</span> {{this.category}}</li>
+            <li><span>Brand:</span> {{this.brand}}</li>
+            <li>{{this.thumbnails}}</li>
+            <li><span>Estado:</span>{{this.status}}</li>
+            <li><span>ID:</span>{{this._id}}</li>
+            <li><span>Owner:</span>{{this.owner}}</li>
+
+            <button onclick="deleteProduct('{{this._id}}')">Borrar</button>
+        </ul>
+    {{/each}}
+</div>
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>

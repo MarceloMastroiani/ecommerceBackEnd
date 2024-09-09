@@ -1,0 +1,72 @@
+<div>
+    <h1>Bienvenido/a</h1>
+    <p>{{user.first_name}}</p>
+    <p>{{user.email}}</p>
+    <p>{{user.age}}</p>
+    <p>ID Carrito: {{user.cart._id}}</p>
+    <p>Rol: {{user.role}}</p>
+    <p>Ultima conexión: {{user.last_connection}}</p>
+
+    <a href="/api/sessions/logout"><button>Logout</button></a>
+</div>
+
+<br>
+<hr>
+
+ <div>
+    <h2>CARRITO</h2>
+    {{#each cart.products}}
+    <div class="productsList" style=" display: flex; flex-direction: column; gap: 20px; background-color: cadetblue; width: auto; margin-top: 20px;">
+        <ul >
+            <li>Nombre: {{this.product.title}}</li>
+            <li>Descripcion: {{this.product.description}}</li>
+            <li>Cantidad: {{this.quantity}} </li> 
+            <li>Precio: ${{this.product.price}}</li>
+        </ul>
+        <button onclick="deleteFromCart('{{../user.cart._id}}','{{this.product._id}}')" style="margin-bottom: 20px; margin-left: 20px;">Remover</button>
+    </div>
+    {{/each}}
+        <div style=" display: flex; justify-content: center; align-items: center; ">
+            <a href='/carts/{{user.cart._id}}'><button> Ir a carrito </button></a>
+        </div>
+
+</div>
+
+<br>
+<hr>
+
+{{#if isValid}}
+<h1 class="title">PRODUCTOS</h1>
+
+<div class="productListContainer;" style="display: flex; flex-direction: column; gap: 20px;">
+    {{#each docs}}
+        <ul class="productsList"  style="background-color: cadetblue; width: 800px; margin: 0 auto; list-style: none; padding: 20px;">
+            <li>Nombre: {{this.title}}</li>
+            <li>Descripcion: {{this.description}} </li>
+            <li>Precio: ${{this.price}} </li>
+            <li>Stock: {{this.stock}}</li>
+            <li>Owner: {{this.owner}}</li>
+            <br/>
+            <button onclick="addToCart('{{../user.cart._id}}', '{{this._id}}')" class="btn">Agregar al carrito</button>
+        </ul>
+    {{/each}}
+</div>
+
+<br/>
+<hr>
+<div>
+    {{#if hasPrevPage}}
+        <a href={{this.prevLink}}><< Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+     {{#if hasNextPage}}
+        <a href={{this.nextLink}}>Siguiente >></a>
+    {{/if}} 
+</div>
+{{else}}
+<h2>No hay productos para mostrar</h2>
+{{/if}}
+
+<script src="/js/products.js"></script>

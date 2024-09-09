@@ -1,0 +1,245 @@
+paths:
+  #MUESTRA LOS PRODUCTOS AGREGANDO QUERY
+  /api/products/:
+    get:
+      summary: Muestra los productos agregando query
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: limit
+          description: Número de productos a mostrar
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: page
+          description: Página a mostrar
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: sort
+          description: Ordenar por
+          required: false
+          schema:
+            type: integer
+            default: ""
+      responses:
+        "200":
+          description: Productos encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+
+  #MUESTRA LOS PRODUCTOS //
+  /api/products/all:
+    get:
+      summary: Muestra todos los productos
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: limit
+          description: Número de productos a mostrar
+          required: false
+          schema:
+            type: integer
+            default: 1
+      responses:
+        "200":
+          description: Productos encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+
+  #BUSCAR POR ID
+  /api/products/{id}:
+    get:
+      summary: Busca un producto por id
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          description: Identificador del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+
+  #ENCUENTRA EL PRODUCTO POR EL BRAND
+  /api/products/{bran}:
+    get:
+      summary: Busca un producto por el brand
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: bran
+          description: Brand del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Productos encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+
+  #AGREGA UN PRODUCTO
+  /api/products/add:
+    post:
+      summary: Agrega un producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        "200":
+          description: Producto agregado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+
+    #MODIFICA UN PRODUCTO
+  /api/products/edit/:id:
+    put:
+      summary: Modifica un producto
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          description: Identificador del producto
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        "200":
+          description: Producto modificado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+
+    #BORRA UN PRODUCTO
+  /api/products/delete/:id:
+    delete:
+      summary: Borra un producto
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          description: Identificador del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto borrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno en la aplicación
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Identificador del producto
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código del producto
+        category:
+          type: string
+          description: Categoría del producto
+        brand:
+          type: string
+          description: Marca del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Stock del producto
+        status:
+          type: boolean
+          description: Estado del producto
+        thumnbnails:
+          type: array
+          description: Thumnbnails del producto
+        owner:
+          type: string
+          description: Dueño del producto
+      example:
+        _id: 5f9d2bd5d4ae0a001ee1a0d1
+        title: Producto 1
+        description: Producto 1 descripción
+        code: P1
+        category: Electronics
+        brand: Apple
+        price: 100
+        stock: 10
+        status: true
+        thumnbnails:
